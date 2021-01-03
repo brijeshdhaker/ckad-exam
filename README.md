@@ -188,7 +188,7 @@ spec:
     runAsUser: 1000
     runAsGroup: 2000
   #
-	containers:
+  containers:
   - image: redis
     name: redis
     resources: {}
