@@ -393,7 +393,6 @@ lubectl delete pod myenv
 </p>
 </details>
 
-
 ### Question 5 : A pod specification file is /root/coruscant.yaml. We tried to create a pod using it, but it didn't worked. Fix the spec file and create a pod using the spec file.
 <details><summary>show</summary>
 <p>
@@ -421,6 +420,7 @@ lubectl delete pod myenv
 </details>
  
 ---
+
 ## 5. Pod Design - 20%
 
 ### Question 1 : Complete the following tasks.
@@ -433,6 +433,7 @@ lubectl delete pod myenv
 ```bash
 
 ```
+
 ```YAML
 ``` 
  
@@ -447,6 +448,7 @@ lubectl delete pod myenv
 ```bash
 
 ```
+
 ```YAML
 ``` 
  
@@ -466,6 +468,7 @@ lubectl delete pod myenv
 ```bash
 
 ```
+
 ```YAML
 ``` 
  
@@ -479,6 +482,7 @@ lubectl delete pod myenv
 ```bash
 
 ```
+
 ```YAML
 ``` 
  
@@ -490,21 +494,58 @@ lubectl delete pod myenv
 ## 6: Services & Networking - 13%
 
 ### Question 1 : Complete the following tasks.1. Create a pod named ig-11 with image nginx and expose its port 80.
+<details><summary>show</summary>
+<p>
+
 ```bash
+
 kubectl run ig-11 --image=nginx --port=80 --expose --dry-run=client -o yaml 
+
 ```
+
+```YAML
+``` 
+ 
+</p>
+</details>
+
 
 ### Question 2 : Create a service for pod ig-11 on using ClusterIP type service with service name greef. Map service port 8080 to container port 80.
+<details><summary>show</summary>
+<p>
+
 ```bash
+
 kubectl expose pod ig-11 --name=greef --port=8080 --target-port=80 --dry-run=client -o yaml 
+
 ```
 
+```YAML
+``` 
+ 
+</p>
+</details>
+
+
 ### Question 3 : Deployment cara is created. Expose port 80 of the deployment using NodePort on port 31888. Use cara as service name.
+<details><summary>show</summary>
+<p>
+
+```bash
 kubectl expose deployment cara --type=NodePort --port80 
 kubectl patch service cara --patch '{"spec": {"ports": [{"port": 80,"nodePort": 31888}]}}'
+```
 
+```YAML
+``` 
+ 
+</p>
+</details>
 
 ### Question 4 : Pod and Service geonosis is created for you. Create a network policy geonosis-shield which allows only pods with label access=granted to access the service. Use appropriate labels.
+<details><summary>show</summary>
+<p>
+
 ```bash
 kubectl run geonosis --image=nginx --port=80 --labels=sector=arkanis --dry-run=client -o yaml > 6.4.1-geonosis-pod.yaml
 kubectl expose pod geonosis --name=geonosis --port=80 --target-port=80 > 6.4.2-geonosis-svc.yaml
@@ -531,16 +572,40 @@ EOF
 kubectl apply -f 6.4.3-geonosis-shield.yaml 
 
 kubectl run busybox --image=busybox --labels=access=granted -it --rm -- wget -O-  10.103.26.211:80
+
 ```
+
+```YAML
+``` 
+ 
+</p>
+</details>
 
 ---
 ## 7. State Persistence - 8%
 
 ### 1. Create a pod named vader with image nginx. Mount a volume named vader-vol at /var/www/html, which should live as long as pod lives.
-kubectl run vader --image=nginx --dry-run=client -o yaml > 7.1-vader-pod.yaml
+<details><summary>show</summary>
+<p>
 
+```bash
+kubectl run vader --image=nginx --dry-run=client -o yaml > 7.1-vader-pod.yaml
+```
+
+```YAML
+``` 
+ 
+</p>
+</details>
 
 ### 2. We created a persistent volume maul-pv and a persistent volume claim maul-pvc. But our PVC is not bounding to PV. Fix the issue. You may need to delete and recreate the PVC.
+<details><summary>show</summary>
+<p>
+
+```bash
+
+```
+
 ```YAML
 apiVersion: v1
 kind: PersistentVolume
@@ -569,13 +634,22 @@ spec:
   resources:
     requests:
       storage: 3Gi    
-```
+``` 
+ 
+</p>
+</details>
+
+
 	
 ### Question 3 : Complete the following tasks.
 #### 1. Create a persistent volume sidious-pv with 200Mi at /data/mysql on host. Use manual storageClassName and ReadWriteOnce access mode.
 #### 2. Create a persistent volume claim sidious-pvc and consume the pv sidious-pv.
 #### 3. Create a pod sidious with image mysql and mount the PVC at /var/lib/mysql using volume name sidious-vol. Set an environment variable MYSQL_ROOT_PASSWORD=my-secret-pw as well.
-```YAML
+<details><summary>show</summary>
+<p>
+
+```bash
+cat << EOF > 7.3.1-sidious-pv.yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -590,8 +664,11 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data/mysql"
----
----
+EOF
+
+kubectl apply -f 7.3.1-sidious-pv.yaml
+
+cat << EOF > 7.3.2-sidious-pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -602,8 +679,12 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 200Mi 
----
+      storage: 200Mi
+EOF
+
+kubectl apply -f 7.3.2-sidious-pvc.yaml
+
+cat << EOF > 7.3.3-sidious-pod.yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -619,10 +700,26 @@ spec:
     - name: sidious-vol
       persistentVolumeClaim:
         claimName: sidious-pvc
----
+EOF
+
+kubectl apply -f 7.3.3-sidious-pod.yaml
+
 ```
+
+```YAML
+```
+ 
+</p>
+</details>
+
           
 ### Question 4 : Create a pod dooku with two containers using image redis and nginx. Create a shard hostPath volume at /data/dooku named dooku-logs mounted at /var/log/dooku in both the containers.
+<details><summary>show</summary>
+<p>
+
+```bash
+
+```
 
 ```YAML
 apiVersion: v1
@@ -646,7 +743,12 @@ spec:
       hostPath:
         path:"/data/dooku"
         type: DirectoryOrCreate
-```
+``` 
+ 
+</p>
+</details>
+
+
 
 *This text will be italic*
 _This will also be italic_
