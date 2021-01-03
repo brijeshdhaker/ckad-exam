@@ -1,0 +1,4 @@
+foo3=lili
+foo4=lele
+key1=value1
+key2=value2

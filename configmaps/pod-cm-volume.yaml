@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: cm-volumes
+  name: cm-volumes
+spec:
+  volumes:
+  - name: cm-volume
+    configMap: 
+        name: default-app-configs
+        items:
+          - key: dev.properties
+            path: dev.properties
+          - key: uat.properties
+            path: uat.properties
+          - key: prod.properties
+            path: prod.properties  
+  containers:
+  - image: nginx
+    name: nginx
+    resources: {}
+    volumeMounts:
+    - mountPath: /app/config
+      name: cm-volume
+      readOnly: true
+    env:
+      - name: APPNAME
+        valueFrom:
+          configMapKeyRef: 
+            name: default-app-configs
+            key: appame
+      - name: PROFILE 
+        valueFrom: 
+          configMapKeyRef: 
+            name: default-app-configs
+            key: profile
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  al-user: "100121"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: al-conf
+  namespace: datatab

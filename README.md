@@ -33,7 +33,6 @@ status: {}
 kubectl -n frontend run nginx --image=nginx --dry-run=client -o yaml > 1.2-pod.yaml 
 kubectl -n frontend apply -f 1.2-pod.yaml
 ```
-
 ```YAML
 apiVersion: v1
 kind: Pod
@@ -94,7 +93,6 @@ kubectl get svc -A > /root/all-services.txt
 ```bash
 kubectl run mypodx --image=redis --restart=Never --dry-run=client -o yaml > /root/mypodx.yaml
 ```
-
 </p>
 </details>
 
@@ -448,7 +446,7 @@ status: {}
 <p>
 
 ```bash
-kubectl run myenv --image:alpine --dry-run=client -o yaml -- sh -c "printenv && sleep 1h" > 4.3-myenv-pod.yaml
+kubectl run myenv --image=alpine --dry-run=client -o yaml -- sh -c "printenv && sleep 1h" > 4.3-myenv-pod.yaml
 kubectl apply -f 4.3-myenv-pod.yaml
 kubectl get log myenv > /root/myenv.log
 lubectl delete pod myenv

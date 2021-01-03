@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: hello
+  name: hello
+spec:
+  containers:
+  - args:
+    - echo
+    - Hello World
+    image: busybox
+    name: hello
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}

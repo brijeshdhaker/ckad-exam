@@ -1,0 +1,53 @@
+#
+# kubectl create deploy webapp --image=nginx --replicas=2 --port=80
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webapp
+  name: webapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webapp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+        resources: {}
+status: {}
+#
+#
+#
+
+# kubectl scale deployment webapp --replicas=15
+
+# kubectl set image deployment webapp nginx=nginx:1.17.1
+# kubectl describe deployment webapp | grep Image
+
+# kubectl set image deployment webapp nginx=nginx:1.17.4
+# kubectl describe deployment webapp | grep Image
+
+# kubectl rollout status deploy webapp
+# kubectl rollout history deployment webapp
+
+# kubectl rollout undo deployment webapp
+# kubectl describe deployment webapp | grep Image
+
+# kubectl rollout undo deployment webapp --to-revision=3
+
+# kubectl rollout history deploy webapp --revision=7
+
+# kubectl rollout pause deploy webapp
+# kubectl rollout resume deploy webapp 
