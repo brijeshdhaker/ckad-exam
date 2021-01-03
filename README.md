@@ -331,7 +331,96 @@ status: {}
 
 ## 4. Observability - 18%
 
+### Question 1 : Create a pod myredis with image redis. Define a liveness probe and readiness probe with an initial delay of 5 seconds and command redis-cli PING.
+<details><summary>show</summary>
+<p>
 
+```bash
+kubectl run myredis --image:redis --dry-run=client -o yaml > 4.1-myredis.yaml
+vi 4.1-myredis.yaml
+kubectl apply -f 4.1-myredis.yaml
+```
+ 
+</p>
+</details>
+
+### Question 2 : Create a pod httptest with image kennethreitz/httpbin. Define a readiness probe at path /status/200 on port 80 of the container.
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl run httptest --image:kennethreitz/httpbin --dry-run=client -o yaml > 4.2-httptest-pod.yaml
+vi 4.2-httptest-pod.yaml
+kubectl apply -f 4.2-httptest-pod.yaml
+```
+
+```YAML
+``` 
+
+</p>
+</details>
+
+### Question 3 : 
+#### 1. Create a Pod named myenv with command sh -c "printenv && sleep 1h". Use alpine image.
+#### 2. Save the logs of the pod to /root/myenv.log file.
+#### 3. Delete myenv pod.
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl run myenv --image:alpine --dry-run=client -o yaml -- sh -c "printenv && sleep 1h" > 4.3-myenv-pod.yaml
+kubectl apply -f 4.3-myenv-pod.yaml
+kubectl get log myenv > /root/myenv.log
+lubectl delete pod myenv
+```
+```YAML
+``` 
+ 
+</p>
+</details>
+
+
+### Question 4 : A pod named tatooine is created. But looks like its crashing. Fix it. The pod should be in running state. Recreate the pods if necessary.
+<details><summary>show</summary>
+<p>
+
+```bash
+
+```
+```YAML
+``` 
+
+</p>
+</details>
+
+
+### Question 5 : A pod specification file is /root/coruscant.yaml. We tried to create a pod using it, but it didn't worked. Fix the spec file and create a pod using the spec file.
+<details><summary>show</summary>
+<p>
+
+```bash
+
+```
+```YAML
+``` 
+ 
+</p>
+</details>
+
+### Question 6 : Find the name of pod which is using most CPU across all namespaces. Enter the name of pod in /root/high-cpu.yaml.
+<details><summary>show</summary>
+<p>
+
+```bash
+
+```
+```YAML
+``` 
+ 
+</p>
+</details>
+ 
+---
 ## 5. Pod Design - 20%
 
 
