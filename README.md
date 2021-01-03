@@ -164,6 +164,45 @@ kubactl apply -f 2.2-al-pod.yaml
 </p>
 </details>
 
+### Question 3 : Create a Pod named secure-pod. Use redis image. Run pod as user 1000 and group 2000.
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl run secure-pod --image=redis --dry-run=client -o yaml > 2.3-secure-pod.yaml
+```
+
+vi 2.3-secure-pod.yaml
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: secure-pod
+  name: secure-pod
+spec:
+  # Add Below
+  securtyContext:
+    runAsUser: 1000
+    runAsGroup: 2000
+  #
+	containers:
+  - image: redis
+    name: redis
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+```
+
+kubactl apply -f 2.3-secure-pod.yaml
+
+</p>
+</details>
+
 ## 3. Multi-Container Pods - 10%
 
 
