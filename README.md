@@ -274,6 +274,51 @@ kubactl apply -f 2.6.2-sa-pod.yaml
 </p>
 </details>
 
+
+### Question 7 : for pod secure-pod as above(Q-3), this time set the securityContext for the container as well and verify that the securityContext of container overrides the Pod level securityContext.
+<details><summary>show</summary>
+<p>
+
+```bash
+// create yml file with dry-run
+kubectl run secbusybox --image=busybox --restart=Never --dry-run -o yaml -- /bin/sh -c "sleep 3600;" > busybox.yml
+
+// edit the pod like below and create
+kubectl create -f busybox.yml
+
+// verify
+kubectl exec -it secbusybox -- sh
+id // you can see container securityContext overides the Pod level
+```
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: secbusybox
+  name: secbusybox
+spec:
+  securityContext:
+    runAsUser: 1000
+  containers:
+  - args:
+    - /bin/sh
+    - -c
+    - sleep 3600;
+    image: busybox
+    securityContext:
+      runAsUser: 2000
+    name: secbusybox
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
+```
+ 
+</p>
+</details>
 - - -
 
 ## 3. Multi-Container Pods - 10%
@@ -567,6 +612,7 @@ kubectl patch service cara --patch '{"spec": {"ports": [{"port": 80,"nodePort": 
 ### Question 4 : Pod and Service geonosis is created for you. Create a network policy geonosis-shield which allows only pods with label access=granted to access the service. Use appropriate labels.
 <details><summary>show</summary>
 <p>
+
 ```bash
 kubectl run geonosis --image=nginx --port=80 --labels=sector=arkanis --dry-run=client -o yaml > 6.4.1-geonosis-pod.yaml
 kubectl expose pod geonosis --name=geonosis --port=80 --target-port=80 > 6.4.2-geonosis-svc.yaml
@@ -809,7 +855,7 @@ kubectl apply -f  7.4-dooku-pod.yaml
 - [ ] this is an incomplete item
 
 
-## Conclusion !!!
+# Conclusion !!!
 <p>
 CKAD is a performance-based exam and it’s all about completing 19 questions within 2 hours. We need a lot of practice for it. These 150 questions give you enough practice for the exam. The more you practice the more comfortable you feel during the exam. Practice. Practice. Practice.
 </p>
