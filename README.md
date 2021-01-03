@@ -203,6 +203,29 @@ kubactl apply -f 2.3-secure-pod.yaml
 </p>
 </details>
 
+### Question 4 : Create a pod manifest file at /root/limited-pod.yaml with name limited-pod and busybox image. Set memory request at 100Mi and limit at 200Mi. You do not need to create the pod.
+<details><summary>show</summary>
+<p>
+ 
+```bash
+kubectl run limited-pod --image=busybox --requests="memory=100Mi" --limits="200Mi" --dry-run=client -o yaml > /root/limited-pod.yaml
+``` 
+
+</p>
+</details>
+
+### Question 5 : Complete the following tasks.
+#### 5.1 Create a secret db-secret with value MYSQL_ROOT_PASSWORD=YoYoSecret and MYSQL_PASSWORD=XoXoPassword.
+#### 5.2 Create a configmap db-config with value MYSQL_USER=k8s and MYSQL_DATABASE=newdb.
+#### 5.1 Create a pod named mydb with image mysql:5.7 and expose all values of db-secret and db-config as environment variable to pod.
+<details><summary>show</summary>
+<p>
+
+</p>
+</details>
+
+---
+
 ## 3. Multi-Container Pods - 10%
 
 
