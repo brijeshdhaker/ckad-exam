@@ -81,12 +81,12 @@ kubectl get svc -A > /root/all-services.txt
 
 ```bash
  kubectl run hello --image=busybox --restart=Never --dry-run=client -o yaml -- echo "Hello World" > 1.5-pod.yaml 
- kubectl apply -f 1.5-pod.yaml
+ kubectl apply -f 1.5-hello-pod.yaml
 ```
 </p>
 </details>
 
-### Question 6 : Generate a pod manifest file at /root/mypodx.yaml. Pod name should be mypodx with image redis. Make sure you only generate the pod manifest file, you do not have to crete the pod.
+### Question 6 : Generate a pod manifest file at /root/mypodx.yaml. Pod name should be mypodx with image redis. Make sure you only generate the pod manifest file, you do not have to create the pod.
 <details><summary>show</summary>
 <p>
 
