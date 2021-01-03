@@ -221,10 +221,70 @@ kubectl run limited-pod --image=busybox --requests="memory=100Mi" --limits="200M
 <details><summary>show</summary>
 <p>
 
+```bash
+kubectl create cm db-config --from-literals=MYSQL_USER=k8s --from-literals=MYSQL_DATABASE=newdb --dry-run=client -o yaml > 2.5.1-db-config.yaml
+kubactl apply -f 2.5.1-db-config.yaml
+
+kubectl create secret generic db-secret --from-literals=MYSQL_ROOT_PASSWORD=YoYoSecret --from-literals=MYSQL_PASSWORD=XoXoPassword --dry-run=client -o yaml > 2.5.2-db-secret.yaml
+kubactl apply -f 2.5.2-db-secret.yaml
+
+kubectl run mydb --image=mysql:5.7 --dry-run=client -o yaml > 2.5.3-mydb.yaml
+```
+
+vi 2.5.3-mydb.yaml
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: secure-pod
+  name: secure-pod
+spec:
+  # Add Below
+  securtyContext:
+    runAsUser: 1000
+    runAsGroup: 2000
+  #
+  containers:
+  - image: redis
+    name: redis
+    resources: {}
+    # Add Below
+		envFrom:
+    - configMapRef:
+      name: db-config
+    - secretRef:
+		  name: db-secret
+    #
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+``` 
+
 </p>
 </details>
 
----
+### Question 6 : Complete the following tasks.
+#### 6.1 Create a service account named namaste
+#### 6.2 Use the service account to create a yo-namaste pod with nginx image.
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl create sa namaste --dry-run=client -o yaml > 2.6.1-sa.yaml
+kubactl apply -f 2.6.1-sa.yaml
+
+kubectl run pod yo-namaste --image=nginx --serviceaccount=namaste --dry-run=client -o yaml > 2.6.2-sa-pod.yaml 
+kubactl apply -f 2.6.2-sa-pod.yaml
+```
+ 
+</p>
+</details>
+
+- - -
 
 ## 3. Multi-Container Pods - 10%
 
