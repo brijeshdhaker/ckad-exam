@@ -139,19 +139,19 @@ metadata:
   labels:
     run: al-pod
   name: al-pod
-	namespace: datatab
+  namespace: datatab
 spec:
   containers:
   - image: redis
     name: al-pod
-		# Add Below
+    # Add Below
     env:
       - name: AL_USER
         valueFrom:
           configMapKeyRef:
             name: my-config
             key: confa
-		#				
+    #				
     resources: {}
   dnsPolicy: ClusterFirst
   restartPolicy: Always
