@@ -507,11 +507,12 @@ kubectl annotate node node01 flagship-
 </details>
 
 ### Question 6 : Get the name and image of all pods in skywalker namespace having label jedi=true. Write the output to /root/jedi-true.txt and Output should be in the following format. 
-<p>
- Use jsonpath.
- podname,image
- podname2,image
-</p>
+
+pod-name | image-name
+---------| -----------
+podname  | image
+podname2 | image
+
 <details><summary>show</summary>
 <p>
 
@@ -827,11 +828,7 @@ http://github.com - automatic!
 - [x] this is a complete item
 - [ ] this is an incomplete item
 
-# Tables 
-First Header | Second Header
------------- | -------------
-Content from cell 1 | Content from cell 2
-Content in the first column | Content in the second column
+
 
 ## Strikethrough
 Any word wrapped with two tildes (like ~~this~~) will appear crossed out.
