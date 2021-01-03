@@ -376,7 +376,6 @@ kubectl run myredis --image=redis --dry-run=client -o yaml > 4.1-myredis.yaml
 vi 4.1-myredis.yaml
 kubectl apply -f 4.1-myredis.yaml
 ```
-
 ```YAML
 apiVersion: v1
 kind: Pod
@@ -390,6 +389,7 @@ spec:
   - image: redis
     name: myredis
     livenessProbe:
+		  initialDelaySeconds: 3
       exec:
         command:
           - redis-cli 
@@ -416,8 +416,26 @@ kubectl run httptest --image:kennethreitz/httpbin --dry-run=client -o yaml > 4.2
 vi 4.2-httptest-pod.yaml
 kubectl apply -f 4.2-httptest-pod.yaml
 ```
-
 ```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: httptest
+  name: httptest
+spec:
+  containers:
+  - image: kennethreitz/httpbin
+    name: httpbin
+    readinessProbe:
+      httpGet:
+        path: /status/200
+        port: 80  
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
 ``` 
 </p>
 </details>
