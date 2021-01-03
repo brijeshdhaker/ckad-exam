@@ -423,11 +423,230 @@ lubectl delete pod myenv
 ---
 ## 5. Pod Design - 20%
 
+### Question 1 : Complete the following tasks.
+#### 1. Create a deployment named hoth with image httpd in planets namespace.
+#### 2. Scale the deployment to 4 replicas.
+#### 3. Update the deployment to use httpd:2.4.46 image.
+<details><summary>show</summary>
+<p>
+
+```bash
+
+```
+```YAML
+``` 
+ 
+</p>
+</details>
+### Question 2 : Complete the following tasks.
+#### 1. Deployment yavin is deployed but after an upgrade, new pods are not getting created. Rollback the deployment yavin so they are working again.
+#### 2. Export yavin deployment spec in JSON to /root/yavin.json file.
+<details><summary>show</summary>
+<p>
+
+```bash
+
+```
+```YAML
+``` 
+ 
+</p>
+</details>
+### Question 3 : Complete the following tasks.
+#### 1 . Deployment naboo is created. Make sure the replicas autoscale with minimum 2 and maximum 5 when at 80% CPU. Use naboo as the name of HPA resource.
+
+### Question 4 : Create a Cron job bespin that runs every 5 minutes(*/5 * * * *) and runs command date. Use alpine image.
+
+### Question 5 : Complete the following tasks.
+#### 5.1 Label node node01 with shuttle=true.
+#### 5.2 Remove annotation flagship=finalizer form node01.
+<details><summary>show</summary>
+<p>
+
+```bash
+
+```
+```YAML
+``` 
+ 
+</p>
+</details>
+### Question 6 : Get the name and image of all pods in skywalker namespace having label jedi=true. Write the output to /root/jedi-true.txt 
+                 Output should be in the following format. Use jsonpath.
+<details><summary>show</summary>
+<p>
+
+```bash
+
+```
+```YAML
+``` 
+ 
+</p>
+</details>
+
+---
 
 ## 6: Services & Networking - 13%
 
+### Question 1 : Complete the following tasks.1. Create a pod named ig-11 with image nginx and expose its port 80.
+```bash
+kubectl run ig-11 --image=nginx --port=80 --expose --dry-run=client -o yaml 
+```
 
+### Question 2 : Create a service for pod ig-11 on using ClusterIP type service with service name greef. Map service port 8080 to container port 80.
+```bash
+kubectl expose pod ig-11 --name=greef --port=8080 --target-port=80 --dry-run=client -o yaml 
+```
+
+### Question 3 : Deployment cara is created. Expose port 80 of the deployment using NodePort on port 31888. Use cara as service name.
+kubectl expose deployment cara --type=NodePort --port80 
+kubectl patch service cara --patch '{"spec": {"ports": [{"port": 80,"nodePort": 31888}]}}'
+
+
+### Question 4 : Pod and Service geonosis is created for you. Create a network policy geonosis-shield which allows only pods with label access=granted to access the service. Use appropriate labels.
+```bash
+kubectl run geonosis --image=nginx --port=80 --labels=sector=arkanis --dry-run=client -o yaml > 6.4.1-geonosis-pod.yaml
+kubectl expose pod geonosis --name=geonosis --port=80 --target-port=80 > 6.4.2-geonosis-svc.yaml
+kubectl apply -f 6.4.2-geonosis-svc.yaml
+
+cat << EOF > 6.4.3-geonosis-shield.yaml 
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: geonosis-shield
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      sector: arkanis
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          access: granted
+          
+EOF
+
+kubectl apply -f 6.4.3-geonosis-shield.yaml 
+
+kubectl run busybox --image=busybox --labels=access=granted -it --rm -- wget -O-  10.103.26.211:80
+```
+
+---
 ## 7. State Persistence - 8%
+
+### 1. Create a pod named vader with image nginx. Mount a volume named vader-vol at /var/www/html, which should live as long as pod lives.
+kubectl run vader --image=nginx --dry-run=client -o yaml > 7.1-vader-pod.yaml
+
+
+### 2. We created a persistent volume maul-pv and a persistent volume claim maul-pvc. But our PVC is not bounding to PV. Fix the issue. You may need to delete and recreate the PVC.
+```YAML
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: maul-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+---
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: maul-pvc
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi    
+```
+	
+### Question 3 : Complete the following tasks.
+#### 1. Create a persistent volume sidious-pv with 200Mi at /data/mysql on host. Use manual storageClassName and ReadWriteOnce access mode.
+#### 2. Create a persistent volume claim sidious-pvc and consume the pv sidious-pv.
+#### 3. Create a pod sidious with image mysql and mount the PVC at /var/lib/mysql using volume name sidious-vol. Set an environment variable MYSQL_ROOT_PASSWORD=my-secret-pw as well.
+```YAML
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sidious-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/mysql"
+---
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sidious-pvc
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi 
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sidious
+spec:
+  containers:
+    - name: mysql
+      image: mysql
+      volumeMounts:
+        - mountPath: "/var/lib/mysql"
+          name: sidious-vol
+  volumes:
+    - name: sidious-vol
+      persistentVolumeClaim:
+        claimName: sidious-pvc
+---
+```
+          
+### Question 4 : Create a pod dooku with two containers using image redis and nginx. Create a shard hostPath volume at /data/dooku named dooku-logs mounted at /var/log/dooku in both the containers.
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dooku
+spec:
+  containers:
+    - name: redis
+      image: redis
+      volumeMounts:
+        - mountPath: "/var/log/dooku"
+          name: dooku-logs
+    - name: nginx
+      image: nginx
+      volumeMounts:
+        - mountPath: "/var/log/dooku"
+          name: dooku-logs
+  volumes:
+    - name: dooku-logs
+      hostPath:
+        path:"/data/dooku"
+        type: DirectoryOrCreate
+```
 
 *This text will be italic*
 _This will also be italic_
