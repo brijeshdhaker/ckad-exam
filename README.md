@@ -252,11 +252,11 @@ spec:
     name: redis
     resources: {}
     # Add Below
-		envFrom:
+    envFrom:
     - configMapRef:
       name: db-config
     - secretRef:
-		  name: db-secret
+      name: db-secret
     #
   dnsPolicy: ClusterFirst
   restartPolicy: Always
