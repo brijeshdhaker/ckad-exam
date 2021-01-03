@@ -442,6 +442,7 @@ kubectl -n namespace set image deployment hoth httpd=httpd:2.4.46
  
 </p>
 </details>
+
 ### Question 2 : Complete the following tasks.
 #### 1. Deployment yavin is deployed but after an upgrade, new pods are not getting created. Rollback the deployment yavin so they are working again.
 #### 2. Export yavin deployment spec in JSON to /root/yavin.json file.
@@ -504,6 +505,7 @@ kubectl annotate node node01 flagship-
  
 </p>
 </details>
+
 ### Question 6 : Get the name and image of all pods in skywalker namespace having label jedi=true. Write the output to /root/jedi-true.txt 
                  Output should be in the following format. Use jsonpath.
 								  podname,image
