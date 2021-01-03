@@ -431,7 +431,10 @@ lubectl delete pod myenv
 <p>
 
 ```bash
-
+kubectl create ns planets
+kubectl -n namespace create deployment hoth --image=httpd --dry-run=client -o yaml > 5.1-deployment.yaml
+kubectl -n namespace scale deployment hoth --replicas=4
+kubectl -n namespace set image deployment hoth httpd=httpd:2.4.46
 ```
 
 ```YAML
@@ -446,7 +449,8 @@ lubectl delete pod myenv
 <p>
 
 ```bash
-
+kubectl rollout undo deploy yavin
+kubectl get deploy yavin -o json > /root/yavin.json
 ```
 
 ```YAML
@@ -454,10 +458,35 @@ lubectl delete pod myenv
  
 </p>
 </details>
-### Question 3 : Complete the following tasks.
-#### 1 . Deployment naboo is created. Make sure the replicas autoscale with minimum 2 and maximum 5 when at 80% CPU. Use naboo as the name of HPA resource.
+
+### Question 3 : Deployment naboo is created. Make sure the replicas autoscale with minimum 2 and maximum 5 when at 80% CPU. Use naboo as the name of HPA resource.
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl rollout undo deploy yavin
+kubectl get deploy yavin -o json > /root/yavin.json
+```
+
+```YAML
+``` 
+ 
+</p>
+</details>
 
 ### Question 4 : Create a Cron job bespin that runs every 5 minutes(*/5 * * * *) and runs command date. Use alpine image.
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl create cj bespin --image=alpine --schedule="*/5 * * * *" --dry-run=client -o yaml > 4.1-job.yaml
+```
+
+```YAML
+``` 
+ 
+</p>
+</details>
 
 ### Question 5 : Complete the following tasks.
 #### 5.1 Label node node01 with shuttle=true.
@@ -466,7 +495,8 @@ lubectl delete pod myenv
 <p>
 
 ```bash
-
+kubectl label node node01 shuttle=true
+kubectl annotate node node01 flagship-
 ```
 
 ```YAML
@@ -476,11 +506,14 @@ lubectl delete pod myenv
 </details>
 ### Question 6 : Get the name and image of all pods in skywalker namespace having label jedi=true. Write the output to /root/jedi-true.txt 
                  Output should be in the following format. Use jsonpath.
+								  podname,image
+									podname2,image
+								
 <details><summary>show</summary>
 <p>
 
 ```bash
-
+kubectl -n skywalker get pods -l jedi=true -o jsonpath="{range.items[*]}{.metadata.name},{.spec.containers[0].image}{'\n'}{end}" > /root/jedi-true.txt
 ```
 
 ```YAML
@@ -496,11 +529,8 @@ lubectl delete pod myenv
 ### Question 1 : Complete the following tasks.1. Create a pod named ig-11 with image nginx and expose its port 80.
 <details><summary>show</summary>
 <p>
-
 ```bash
-
 kubectl run ig-11 --image=nginx --port=80 --expose --dry-run=client -o yaml 
-
 ```
 
 ```YAML
@@ -530,22 +560,18 @@ kubectl expose pod ig-11 --name=greef --port=8080 --target-port=80 --dry-run=cli
 ### Question 3 : Deployment cara is created. Expose port 80 of the deployment using NodePort on port 31888. Use cara as service name.
 <details><summary>show</summary>
 <p>
-
 ```bash
 kubectl expose deployment cara --type=NodePort --port80 
 kubectl patch service cara --patch '{"spec": {"ports": [{"port": 80,"nodePort": 31888}]}}'
 ```
-
 ```YAML
 ``` 
- 
 </p>
 </details>
 
 ### Question 4 : Pod and Service geonosis is created for you. Create a network policy geonosis-shield which allows only pods with label access=granted to access the service. Use appropriate labels.
 <details><summary>show</summary>
 <p>
-
 ```bash
 kubectl run geonosis --image=nginx --port=80 --labels=sector=arkanis --dry-run=client -o yaml > 6.4.1-geonosis-pod.yaml
 kubectl expose pod geonosis --name=geonosis --port=80 --target-port=80 > 6.4.2-geonosis-svc.yaml
@@ -587,12 +613,33 @@ kubectl run busybox --image=busybox --labels=access=granted -it --rm -- wget -O-
 ### 1. Create a pod named vader with image nginx. Mount a volume named vader-vol at /var/www/html, which should live as long as pod lives.
 <details><summary>show</summary>
 <p>
-
 ```bash
 kubectl run vader --image=nginx --dry-run=client -o yaml > 7.1-vader-pod.yaml
+vi 7.1-vader-pod.yaml
 ```
 
 ```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: vader
+  name: vader
+spec:
+  containers:
+  - image: nginx
+    name: vader
+    volumeMounts:
+      - name: vadel-vol
+        mountPath: "/var/www/html"
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+  volumes:
+    - name: vadel-vol
+      emptyDir: {}
+status: {}
 ``` 
  
 </p>
@@ -601,11 +648,12 @@ kubectl run vader --image=nginx --dry-run=client -o yaml > 7.1-vader-pod.yaml
 ### 2. We created a persistent volume maul-pv and a persistent volume claim maul-pvc. But our PVC is not bounding to PV. Fix the issue. You may need to delete and recreate the PVC.
 <details><summary>show</summary>
 <p>
-
 ```bash
+kubectl get pvc maul-pv > maul-pv.yaml
+kubectl get pvc maul-pvc > maul-pvc.yaml
+vi maul-pvc.yaml
 
 ```
-
 ```YAML
 apiVersion: v1
 kind: PersistentVolume
@@ -630,7 +678,9 @@ metadata:
 spec:
   storageClassName: manual
   accessModes:
+    # Update This 
     - ReadWriteOnce
+    #		
   resources:
     requests:
       storage: 3Gi    
