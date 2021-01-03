@@ -506,11 +506,12 @@ kubectl annotate node node01 flagship-
 </p>
 </details>
 
-### Question 6 : Get the name and image of all pods in skywalker namespace having label jedi=true. Write the output to /root/jedi-true.txt 
-                 Output should be in the following format. Use jsonpath.
-								  podname,image
-									podname2,image
-								
+### Question 6 : Get the name and image of all pods in skywalker namespace having label jedi=true. Write the output to /root/jedi-true.txt and Output should be in the following format. 
+<p>
+ Use jsonpath.
+ podname,image
+ podname2,image
+</p>
 <details><summary>show</summary>
 <p>
 
