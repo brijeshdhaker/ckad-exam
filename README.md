@@ -372,11 +372,38 @@ status: {}
 <p>
 
 ```bash
-kubectl run myredis --image:redis --dry-run=client -o yaml > 4.1-myredis.yaml
+kubectl run myredis --image=redis --dry-run=client -o yaml > 4.1-myredis.yaml
 vi 4.1-myredis.yaml
 kubectl apply -f 4.1-myredis.yaml
 ```
- 
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: myredis
+  name: myredis
+spec:
+  containers:
+  - image: redis
+    name: myredis
+    livenessProbe:
+      exec:
+        command:
+          - redis-cli 
+          - PING
+    readinessProbe:
+      exec:
+        command:
+          - redis-cli 
+          - PING          
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+```
 </p>
 </details>
 
@@ -392,7 +419,6 @@ kubectl apply -f 4.2-httptest-pod.yaml
 
 ```YAML
 ``` 
-
 </p>
 </details>
 
@@ -411,7 +437,6 @@ lubectl delete pod myenv
 ```
 ```YAML
 ``` 
- 
 </p>
 </details>
 
@@ -425,7 +450,6 @@ lubectl delete pod myenv
 ```
 ```YAML
 ``` 
-
 </p>
 </details>
 
@@ -434,11 +458,9 @@ lubectl delete pod myenv
 <p>
 
 ```bash
-
 ```
 ```YAML
 ``` 
- 
 </p>
 </details>
 
@@ -447,11 +469,12 @@ lubectl delete pod myenv
 <p>
 
 ```bash
-
+kubectl top pods -A --sort-by=cpu > /root/high-cpu.yaml
+//or
+kubectl top pod -A | sort --reverse --key 3 --numeric
 ```
 ```YAML
 ``` 
- 
 </p>
 </details>
  
@@ -472,10 +495,8 @@ kubectl -n namespace create deployment hoth --image=httpd --dry-run=client -o ya
 kubectl -n namespace scale deployment hoth --replicas=4
 kubectl -n namespace set image deployment hoth httpd=httpd:2.4.46
 ```
-
 ```YAML
 ``` 
- 
 </p>
 </details>
 
@@ -489,10 +510,8 @@ kubectl -n namespace set image deployment hoth httpd=httpd:2.4.46
 kubectl rollout undo deploy yavin
 kubectl get deploy yavin -o json > /root/yavin.json
 ```
-
 ```YAML
 ``` 
- 
 </p>
 </details>
 
@@ -575,31 +594,26 @@ kubectl run ig-11 --image=nginx --port=80 --expose --dry-run=client -o yaml
 
 ```YAML
 ``` 
- 
 </p>
 </details>
-
 
 ### Question 2 : Create a service for pod ig-11 on using ClusterIP type service with service name greef. Map service port 8080 to container port 80.
 <details><summary>show</summary>
 <p>
 
 ```bash
-
 kubectl expose pod ig-11 --name=greef --port=8080 --target-port=80 --dry-run=client -o yaml 
-
 ```
 
 ```YAML
 ``` 
- 
 </p>
 </details>
-
 
 ### Question 3 : Deployment cara is created. Expose port 80 of the deployment using NodePort on port 31888. Use cara as service name.
 <details><summary>show</summary>
 <p>
+
 ```bash
 kubectl expose deployment cara --type=NodePort --port80 
 kubectl patch service cara --patch '{"spec": {"ports": [{"port": 80,"nodePort": 31888}]}}'
