@@ -1,5 +1,5 @@
 # CKAD Certification 
-*A Complete Guide for CKAD Certification *
+*A Complete Guide for CKAD Certification*
 
 ## 1. Concepts - 13%
 
@@ -102,6 +102,81 @@ kubectl run mypodx --image=redis --restart=Never --dry-run=client -o yaml > /roo
 </details>
 
 
+
+
+## 2. Configuration - 18%
+
+### Question 1 : Create a config map called al-conf in namespace called datatab. Use value al-user=i100121 You may need to create namespace if it does not exists.
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl create ns datatab
+kubectl create -n datatab cm al-conf --from-literal=al-user=i100121 --dry-run=client -o yaml > 2.1-cm.yaml
+kubactl apply -f 2.1-cm.yaml
+```
+
+</p>
+</details>
+
+
+### Question 2 : A configmap al-conf has been created in namespace called datatab. Expose the value of al-user to a pod named al-pod as AL_USER environment variable. Use redis image for the pod.
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl run -n datatab al-pod --image=redis --dry-run=client -o yaml > 2.2-al-pod.yaml
+
+```
+
+vi 2.2-al-pod.yaml
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: al-pod
+  name: al-pod
+	namespace: datatab
+spec:
+  containers:
+  - image: redis
+    name: al-pod
+		# Add Below
+    env:
+      - name: AL_USER
+        valueFrom:
+          configMapKeyRef:
+            name: my-config
+            key: confa
+		#				
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+```
+
+kubactl apply -f 2.2-al-pod.yaml
+
+</p>
+</details>
+
+## 3. Multi-Container Pods - 10%
+
+
+## 4. Observability - 18%
+
+
+## 5. Pod Design - 20%
+
+
+## 6: Services & Networking - 13%
+
+
+## 7. State Persistence - 8%
 
 *This text will be italic*
 _This will also be italic_
