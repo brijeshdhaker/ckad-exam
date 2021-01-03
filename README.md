@@ -63,7 +63,6 @@ status: {}
 ```bash
 kubectl get pods -n kube-system > /root/kube-system-pods.txt
 ```
-
 </p>
 </details>
 
@@ -74,7 +73,6 @@ kubectl get pods -n kube-system > /root/kube-system-pods.txt
 ```bash
 kubectl get svc -A > /root/all-services.txt
 ```
-
 </p>
 </details>
 
@@ -86,7 +84,6 @@ kubectl get svc -A > /root/all-services.txt
  kubectl run hello --image=busybox --restart=Never --dry-run=client -o yaml -- echo "Hello World" > 1.5-pod.yaml 
  kubectl apply -f 1.5-pod.yaml
 ```
-
 </p>
 </details>
 
@@ -101,8 +98,7 @@ kubectl run mypodx --image=redis --restart=Never --dry-run=client -o yaml > /roo
 </p>
 </details>
 
-
-
+---
 
 ## 2. Configuration - 18%
 
@@ -119,17 +115,14 @@ kubactl apply -f 2.1-cm.yaml
 </p>
 </details>
 
-
 ### Question 2 : A configmap al-conf has been created in namespace called datatab. Expose the value of al-user to a pod named al-pod as AL_USER environment variable. Use redis image for the pod.
 <details><summary>show</summary>
 <p>
 
 ```bash
 kubectl run -n datatab al-pod --image=redis --dry-run=client -o yaml > 2.2-al-pod.yaml
-
-```
-
 vi 2.2-al-pod.yaml
+```
 
 ```YAML
 apiVersion: v1
@@ -170,9 +163,8 @@ kubactl apply -f 2.2-al-pod.yaml
 
 ```bash
 kubectl run secure-pod --image=redis --dry-run=client -o yaml > 2.3-secure-pod.yaml
-```
-
 vi 2.3-secure-pod.yaml
+```
 
 ```YAML
 apiVersion: v1
@@ -229,9 +221,8 @@ kubectl create secret generic db-secret --from-literals=MYSQL_ROOT_PASSWORD=YoYo
 kubactl apply -f 2.5.2-db-secret.yaml
 
 kubectl run mydb --image=mysql:5.7 --dry-run=client -o yaml > 2.5.3-mydb.yaml
-```
-
 vi 2.5.3-mydb.yaml
+```
 
 ```YAML
 apiVersion: v1
@@ -263,7 +254,6 @@ spec:
 status: {}
 
 ``` 
-
 </p>
 </details>
 
@@ -296,6 +286,7 @@ kubactl apply -f 2.6.2-sa-pod.yaml
 kubectl run mp-hello --image=nginx --dry-run=client -o yaml > 3.1.1-mp-hello.yaml 
 vi 3.1.1-mp-hello.yaml
 ```
+
 ```YAML
 apiVersion: v1
 kind: Pod
@@ -818,20 +809,7 @@ kubectl apply -f  7.4-dooku-pod.yaml
 - [ ] this is an incomplete item
 
 
-## Generate SSH Key
-ssh-keygen -t rsa -b 4096 -C "brijeshdhaker@gmail.com"
-
-
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M develop
-git remote add origin git@github.com:brijeshdhaker/ckad-exam.git
-git push -u origin develop
-                
-
-…or push an existing repository from the command line
-
-git remote add origin git@github.com:brijeshdhaker/ckad-exam.git
-git branch -M master
-git push -u origin master
+## Conclusion !!!
+<p>
+CKAD is a performance-based exam and it’s all about completing 19 questions within 2 hours. We need a lot of practice for it. These 150 questions give you enough practice for the exam. The more you practice the more comfortable you feel during the exam. Practice. Practice. Practice.
+</p>
