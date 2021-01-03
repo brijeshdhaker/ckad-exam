@@ -1,5 +1,5 @@
 # CKAD Certification 
-*A Complete Guide for CKAD Certification*
+**A Complete Guide for CKAD Certification**
 
 ## 1. Concepts - 13%
 
@@ -617,9 +617,11 @@ kubectl run busybox --image=busybox --labels=access=granted -it --rm -- wget -O-
 ### 1. Create a pod named vader with image nginx. Mount a volume named vader-vol at /var/www/html, which should live as long as pod lives.
 <details><summary>show</summary>
 <p>
+
 ```bash
 kubectl run vader --image=nginx --dry-run=client -o yaml > 7.1-vader-pod.yaml
 vi 7.1-vader-pod.yaml
+kubectl apply -f  7.1-vader-pod.yaml
 ```
 
 ```YAML
@@ -652,12 +654,14 @@ status: {}
 ### 2. We created a persistent volume maul-pv and a persistent volume claim maul-pvc. But our PVC is not bounding to PV. Fix the issue. You may need to delete and recreate the PVC.
 <details><summary>show</summary>
 <p>
+
 ```bash
 kubectl get pvc maul-pv > maul-pv.yaml
 kubectl get pvc maul-pvc > maul-pvc.yaml
 vi maul-pvc.yaml
 
 ```
+
 ```YAML
 apiVersion: v1
 kind: PersistentVolume
@@ -674,7 +678,6 @@ spec:
   hostPath:
     path: "/mnt/data"
 ---
----
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -689,7 +692,7 @@ spec:
     requests:
       storage: 3Gi    
 ``` 
- 
+
 </p>
 </details>
 
@@ -772,7 +775,8 @@ kubectl apply -f 7.3.3-sidious-pod.yaml
 <p>
 
 ```bash
-
+kubectl run dooku --image=redis --dry-run=client -o yaml > 7.4-dooku-pod.yaml
+vi 7.4-dooku-pod.yaml
 ```
 
 ```YAML
@@ -798,76 +802,36 @@ spec:
         path:"/data/dooku"
         type: DirectoryOrCreate
 ``` 
+
+```bash
+kubectl apply -f  7.4-dooku-pod.yaml
+```
  
 </p>
 </details>
 
 
-
-*This text will be italic*
-_This will also be italic_
-
-**This text will be bold**
-__This will also be bold__
-
-_You **can** combine them_
-
-# List 
-* Item 1
-* Item 2
-  * Item 2a
-  * Item 2b
-
-# Links	
-http://github.com - automatic!
-[GitHub](http://github.com)
-	
-# Task List	
-- [x] @mentions, #refs, [links](), **formatting**, and <del>tags</del> supported
-- [x] list syntax required (any unordered or ordered list supported)
+# CKAD Check List	
+- [x] Register for CKAD
+- [x] Prepare for CKAD
 - [x] this is a complete item
 - [ ] this is an incomplete item
-
-
-
-## Strikethrough
-Any word wrapped with two tildes (like ~~this~~) will appear crossed out.
-	
-## Emoji-cheat-sheet
-https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md
-	
-
-
-
-
 
 
 ## Generate SSH Key
 ssh-keygen -t rsa -b 4096 -C "brijeshdhaker@gmail.com"
 
-##
-
-##
-…or create a new repository on the command line
-echo "# personal" >> README.md
 
 git init
-
 git add README.md
-
 git commit -m "first commit"
-
 git branch -M develop
-
 git remote add origin git@github.com:brijeshdhaker/ckad-exam.git
-
 git push -u origin develop
                 
 
 …or push an existing repository from the command line
 
 git remote add origin git@github.com:brijeshdhaker/ckad-exam.git
-
 git branch -M master
-
 git push -u origin master
