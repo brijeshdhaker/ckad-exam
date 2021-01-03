@@ -288,6 +288,46 @@ kubactl apply -f 2.6.2-sa-pod.yaml
 
 ## 3. Multi-Container Pods - 10%
 
+### Question 1 : Create a pod mp-hello with image alpine,nginx and consul:1.8. Use command sleep infinity for alpine container.
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl run mp-hello --image=nginx --dry-run=client -o yaml > 3.1.1-mp-hello.yaml 
+vi 3.1.1-mp-hello.yaml
+```
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: mp-hello
+  name: mp-hello
+spec:
+  containers:
+  - image: nginx
+    name: nginx 
+    resources: {}
+  - image: busybox
+    name: busybox
+    args:
+    - /bin/sh
+    - -c    
+    - sleep 1000
+    resources: {}
+  - image: consul:1.8
+    name: consul
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+``` 
+
+</p>
+</details>
+
+---
 
 ## 4. Observability - 18%
 
