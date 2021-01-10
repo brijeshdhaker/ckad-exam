@@ -5,6 +5,7 @@
 
 ### Question 1 : Create a namespace called "frontend".
 
+
 <details><summary>show</summary>
 <p>
 
