@@ -3,20 +3,14 @@ kind: Pod
 metadata:
   creationTimestamp: null
   labels:
-    run: pod-runas
-  name: pod-runas
+    run: nginx
+  name: nginx
+  namespace: frontend
 spec:
-  # Below lines need to add 
-  securityContext:
-    runAsUser: root
-    runAsGroup: root
-  #  
   containers:
   - image: nginx
     name: nginx
-    resources:
-      limits:
-        memory: 64Mi
+    resources: {}
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}

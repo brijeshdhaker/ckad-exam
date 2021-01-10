@@ -1,13 +1,11 @@
-#
-#
-#
+cat << EOF | kubectl apply -f -
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   creationTimestamp: null
   name: date-job
 spec:
-  startingDeadlineSeconds: 30  
+  startingDeadlineSeconds: 30
   jobTemplate:
     metadata:
       creationTimestamp: null
@@ -28,7 +26,7 @@ spec:
           restartPolicy: OnFailure
   schedule: '*/1 * * * *'
 status: {}
-
+EOF
 
 #
 # kubectl create cronjob cron-job --image=busybox --schedule="*/1 * * * *" --dry-run=client -o yaml -- bin/sh -c "date; echo Hello from kubernetes cluster" > cron-job.yaml

@@ -1,3 +1,17 @@
+#
+# kubectl create sa i100121 $do
+#
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  creationTimestamp: null
+  name: i100121
+---
+
+# Use Service Account in pod
+# kubectl run nginx-pod --image=nginx --port=80 --serviceaccount=i100121 $do
+#
+---
 apiVersion: v1
 kind: Pod
 metadata:
@@ -9,9 +23,11 @@ spec:
   containers:
   - image: nginx
     name: nginx-pod
-    resources:
-      limits:
-        memory: 64Mi
+    ports:
+    - containerPort: 80
+    resources: {}
   dnsPolicy: ClusterFirst
   restartPolicy: Always
+  serviceAccountName: i100121
 status: {}
+

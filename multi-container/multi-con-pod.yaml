@@ -12,7 +12,7 @@ spec:
   containers:
   - image: busybox 
     command: ["/bin/sh"]
-    args: ["-c", "while true; do echo ‘Hi I am from Main container’ >> /var/log/index.html; sleep5; done"]    
+    args: ["-c", "while true; do echo 'Hi I am from Main container' >> /var/log/index.html; sleep5; done"]    
     name: main-car
     resources: {}
     volumeMounts:

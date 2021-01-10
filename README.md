@@ -30,8 +30,8 @@ status: {}
 <p>
 
 ```bash
-kubectl -n frontend run nginx --image=nginx --dry-run=client -o yaml > 1.2-pod.yaml 
-kubectl -n frontend apply -f 1.2-pod.yaml
+kubectl -n frontend run nginx --image=nginx --dry-run=client -o yaml > 1.2-nginx-pod.yaml 
+kubectl -n frontend apply -f 1.2-nginx-pod.yaml
 ```
 ```YAML
 apiVersion: v1
@@ -80,7 +80,7 @@ kubectl get svc -A > /root/all-services.txt
 <p>
 
 ```bash
- kubectl run hello --image=busybox --restart=Never --dry-run=client -o yaml -- echo "Hello World" > 1.5-pod.yaml 
+ kubectl run hello --image=busybox --restart=Never --dry-run=client -o yaml -- echo "Hello World" > 1.5-hello-pod.yaml 
  kubectl apply -f 1.5-hello-pod.yaml
 ```
 </p>
@@ -106,10 +106,9 @@ kubectl run mypodx --image=redis --restart=Never --dry-run=client -o yaml > /roo
 
 ```bash
 kubectl create ns datatab
-kubectl create -n datatab cm al-conf --from-literal=al-user=i100121 --dry-run=client -o yaml > 2.1-cm.yaml
-kubactl apply -f 2.1-cm.yaml
+kubectl create -n datatab cm al-conf --from-literal=al-user=i100121 --dry-run=client -o yaml > 2.1-al-conf.yaml
+kubactl apply -f 2.1-al-conf.yaml
 ```
-
 </p>
 </details>
 
@@ -147,11 +146,10 @@ spec:
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}
-
 ```
-
+```bash
 kubactl apply -f 2.2-al-pod.yaml
-
+```
 </p>
 </details>
 
@@ -163,7 +161,6 @@ kubactl apply -f 2.2-al-pod.yaml
 kubectl run secure-pod --image=redis --dry-run=client -o yaml > 2.3-secure-pod.yaml
 vi 2.3-secure-pod.yaml
 ```
-
 ```YAML
 apiVersion: v1
 kind: Pod
@@ -185,7 +182,6 @@ spec:
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}
-
 ```
 
 kubactl apply -f 2.3-secure-pod.yaml
@@ -250,7 +246,6 @@ spec:
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}
-
 ``` 
 </p>
 </details>
@@ -387,7 +382,7 @@ spec:
   - image: redis
     name: myredis
     livenessProbe:
-		  initialDelaySeconds: 3
+	initialDelaySeconds: 3
       exec:
         command:
           - redis-cli 
@@ -669,7 +664,7 @@ EOF
 kubectl apply -f 6.4.3-geonosis-shield.yaml 
 
 kubectl run busybox --image=busybox --labels=access=granted -it --rm -- wget -O-  10.103.26.211:80
-
+kubectl run busybox --image=busybox -it --rm -- wget -O- 10.152.183.196:8080
 ```
 
 ```YAML
