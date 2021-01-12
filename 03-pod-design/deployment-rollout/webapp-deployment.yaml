@@ -31,7 +31,7 @@ status: {}
 #
 #
 
-# kubectl scale deployment webapp --replicas=15
+# kubectl scale deployment webapp --replicas=15 --record=true
 
 # kubectl set image deployment webapp nginx=nginx:1.17.1
 # kubectl describe deployment webapp | grep Image
@@ -46,13 +46,16 @@ status: {}
 # kubectl rollout history deployment webapp
 
 # kubectl rollout undo deployment webapp
+# kubectl rollout undo deployment webapp --to-revision=3
 
 # kubectl describe deployment webapp | grep Image
-
-# kubectl rollout undo deployment webapp --to-revision=3
 
 # kubectl rollout history deploy webapp --revision=7
 
 # kubectl rollout pause deploy webapp
 # kubectl rollout resume deploy webapp 
 
+# kubectl patch deployment.v1.apps/nginx-deployment -p '{"spec":{"progressDeadlineSeconds":600}}'
+
+# kubectl autoscale deployment webapp --min=5 --max=10 --cpu-percent=80
+# kubectl get hpa webapp

@@ -9,7 +9,7 @@ alias kgp='kubectl get pods'
 alias kgs='kubectl get svc'
 alias kgd='kubectl get deployment'
 
-### VI Editor Settings
+### VI editor (.vimrc) settings
 set tabsize 2
 set tabstospaces
 set autoindent

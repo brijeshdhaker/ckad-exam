@@ -1,12 +1,18 @@
-टट
+### Kubectl Alias
+alias k='kubectl'
+alias kd='kubectl describe'
+alias kr='kubectl run'
+alias kc='kubectl create'
+alias ka='kubectl apply'
+alias ke='kubectl explain'
+alias kgp='kubectl get pods'
+alias kgs='kubectl get svc'
+alias kgd='kubectl get deployment'
 
-
-
-
-
-
-
-स
+### Other Settings
+set KUBE_EDITOR="vim"
+export do="--dry-run=client -o yaml"
+source <(kubectl completion bash)
 
 
 
@@ -17,21 +23,41 @@ set sw=2                # To change the number of space characters inserted for 
 set expandtab           # To insert space characters whenever the tab key is pressed
 set autoindent          # To automatically indent lines using the vi editor
 
+##
+set ts=2
+set sw=2
+set sts=2
+set expandtab
+set autoindent
+set bg=dark
+
 ## Proposed Setting 
 set expandtab
 set tabstop=2
 set shiftwidth=2
-set sts=2
 set autoindent
 set smartindent
 set bg=dark
 set nowrap
 set paste
 
-
-
 ##
 kubectl config current-context
 kubectl config set-context --current --namespace=107424-spark-cluster-dev
 
 kubectl delete pod my-pod --grace-period=0 --force
+
+# Important Action : 
+: retab 
+
+:%s/\t/  /g
+
+:%s/\t/  /g
+
+Explanation:
+----------------
+% represents the entire buffer/file (:help :%)
+s stands for substitute (:help sub-replace-special)
+\t, or ^I stands for tab
+- use as many spaces as you need per one tab
+g - stands for global, and it will convert multiple occurrences of tabs in the same line
