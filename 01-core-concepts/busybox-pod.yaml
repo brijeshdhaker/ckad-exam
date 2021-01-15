@@ -1,0 +1,3 @@
+#
+# kubectl run busybox --image=busybox -n ckad --lables=run=busybox,env=dev --restart=Never $do -- /bin/sh -c "date; echo 'Hello World'" > busybox-pod.yaml 
+#

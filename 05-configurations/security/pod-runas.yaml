@@ -10,6 +10,7 @@ spec:
   securityContext:
     runAsUser: root
     runAsGroup: root
+    fsGroup: root
   #  
   containers:
   - image: nginx

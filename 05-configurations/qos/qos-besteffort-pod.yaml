@@ -1,0 +1,14 @@
+# For a Pod to be given a QoS class of BestEffort, 
+# 1. The containers in the Pod must not have any memory or CPU limits or requests.
+# Here is the configuration file for a Pod that has one Container. The Container has no memory or CPU limits or requests:
+#    
+---    
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-besteffort
+  namespace: qos-example
+spec:
+  containers:
+  - name: qos-demo-3-ctr
+    image: nginx

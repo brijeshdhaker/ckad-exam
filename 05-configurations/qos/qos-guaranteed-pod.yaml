@@ -1,0 +1,22 @@
+# For a Pod to be given a QoS class of Guaranteed:
+# Every Container, including init containers, in the Pod must have a memory limit and a memory request, and they must be the same.
+# Every Container, including init containers, in the Pod must have a CPU limit and a CPU request, and they must be the same.
+# 
+#
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-guaranteed
+  namespace: qos-example
+spec:
+  containers:
+  - name: qos-demo-ctr
+    image: nginx
+    resources:
+      limits:
+        memory: "200Mi"
+        cpu: "700m"
+      requests:
+        memory: "200Mi"
+        cpu: "700m"

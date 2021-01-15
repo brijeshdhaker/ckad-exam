@@ -1,14 +1,24 @@
 #
+# kubectl create cm ckad-configmap -n ckad \
+# --from-file=dev.properties=app.dev.properties \
+# --from-file=uat.properties=app.dev.properties \
+# --from-file=prod.properties=app.dev.properties \
+# --from-literal=appame=pgc-tool \
+# --from-literal=profile=dev \
+# --from-literal=userid=i100121 \
+# --from-literal=password=Accoo7@k47 \
 #
 #
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: default-app-configs
+  name: ckad-configmap
 data:
   # property-like keys; each key maps to a simple value
   appame: pgc-tool
   profile: dev
+  userid: i100121
+  password: Accoo7@k47
   # file-like keys
   dev.properties: | # YAML for multi-line string
     env=DEV

@@ -1,0 +1,8 @@
+#
+# kubectl create quota my-quota --hard=cpu=1,memory=1G,pods=2,services=3,replicationcontrollers=2,resourcequotas=1,secrets=5,persistentvolumeclaims=10
+#
+# kubectl create quota best-effort --hard=pods=100 --scopes=BestEffort
+# kubectl create quota test --hard=count/deployments.apps=2,count/replicasets.apps=4,count/pods=3,count/secrets=4 --namespace=myspace
+#
+---
+

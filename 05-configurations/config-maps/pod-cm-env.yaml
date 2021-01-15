@@ -16,7 +16,7 @@ spec:
           configMapKeyRef: 
             name: default-config-map 
             key: name
-      - name: UPASSWD 
+      - name: PASSWORD 
         valueFrom: 
           configMapKeyRef: 
             name: default-config-map
