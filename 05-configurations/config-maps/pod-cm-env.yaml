@@ -14,12 +14,12 @@ spec:
       - name: USERNAME
         valueFrom:
           configMapKeyRef: 
-            name: default-config-map 
+            name: multikey-cm 
             key: name
       - name: PASSWORD 
         valueFrom: 
           configMapKeyRef: 
-            name: default-config-map
+            name: multikey-cm
             key: passwd
   dnsPolicy: ClusterFirst
   restartPolicy: Always
