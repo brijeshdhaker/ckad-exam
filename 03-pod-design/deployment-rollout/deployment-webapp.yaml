@@ -1,5 +1,5 @@
 #
-# kubectl create deploy webapp --image=nginx --replicas=2 --port=80
+# kubectl create deploy webapp --image=nginx --replicas=1 --port=80
 #
 apiVersion: apps/v1
 kind: Deployment
@@ -8,8 +8,9 @@ metadata:
   labels:
     app: webapp
   name: webapp
+  namespace: ckad
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: webapp
@@ -41,7 +42,7 @@ status: {}
 
 # kubectl rollout status deploy webapp
 
-# kubectl rollout status -w deploy webapp
+# kubectl rollout status deploy webapp -w
 
 # kubectl rollout history deployment webapp
 
@@ -59,3 +60,6 @@ status: {}
 
 # kubectl autoscale deployment webapp --min=5 --max=10 --cpu-percent=80
 # kubectl get hpa webapp
+
+# kubectl get deployment -l app=webapp -n ckad
+# kubectl get rs -l app=webapp -n ckad

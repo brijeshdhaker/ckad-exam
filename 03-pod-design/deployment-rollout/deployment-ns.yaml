@@ -1,0 +1,11 @@
+#
+# kubectl create ns ckad $do
+#
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: ckad
+spec: {}
+status: {}
