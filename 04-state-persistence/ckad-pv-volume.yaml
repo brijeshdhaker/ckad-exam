@@ -1,7 +1,8 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: task-pv-volume
+  name: ckad-pv-volume
+  namespace: ckad
   labels:
     type: local
 spec:
@@ -10,6 +11,7 @@ spec:
     storage: 10Gi
   accessModes:
     - ReadWriteOnce
+    - ReadWriteMany
   hostPath:
     path: "/mnt/data"
     

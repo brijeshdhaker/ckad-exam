@@ -1,11 +1,12 @@
 #
-# kubectl create job hello --image=busybox -- echo "Hello World" 
+# kubectl create job ckad-job -n ckad --image=busybox $do -- /bin/sh -c "date;echo 'This is sample k8s job'"
 #
 apiVersion: batch/v1
 kind: Job
 metadata:
   creationTimestamp: null
-  name: hello-job
+  name: ckad-job
+  namespace: ckad
 spec:
   completions: 5             # Run 10 times    
   parallelism: 5             # Run in parallelism
@@ -18,7 +19,7 @@ spec:
       - command:
         - /bin/sh
         - -c
-        args: ["date; echo 'Hello from k8s job' ..."]
+        args: ["date; echo '...... This is sample k8s job .... '"]
         image: busybox
         name: hello-job
         resources: {}

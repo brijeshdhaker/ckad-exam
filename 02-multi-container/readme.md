@@ -89,3 +89,53 @@ spec:
 </details>
 
 ---
+### Question 3 : Create busybox pod with two containers, each one will have the image busybox and will run the 'sleep 3600' command. Make both containers mount an emptyDir at '/etc/foo'. Connect to the second busybox, write the first column of '/etc/passwd' file to '/etc/foo/passwd' using command 'cat /etc/passwd | cut -f 1 -d ':' > /etc/foo/passwd '. Connect to the first busybox and write '/etc/foo/passwd' file to standard output. Delete pod.
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl run web-pod --image=nginx --port=80 --dry-run=client -o yaml > 3.1.1-mp-hello.yaml 
+vi 3.1.1-mp-hello.yaml
+```
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: busybox
+  name: busybox
+spec:
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+  containers:
+  - args:
+    - /bin/sh
+    - -c
+    - sleep 3600
+    image: busybox
+    imagePullPolicy: IfNotPresent
+    name: c1
+    resources: {}
+    volumeMounts: #
+    - name: myvolume #
+      mountPath: /etc/foo #
+  - args:
+    - /bin/sh
+    - -c
+    - sleep 3600
+    image: busybox
+    name: c2 
+    volumeMounts: 
+    - name: myvolume 
+      mountPath: /etc/foo 
+  volumes: 
+  - name: myvolume 
+    emptyDir: {} 
+``` 
+
+</p>
+</details>
+
+---

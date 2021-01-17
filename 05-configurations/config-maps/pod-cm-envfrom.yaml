@@ -12,7 +12,7 @@ spec:
     resources: {}
     envFrom:
     - configMapRef:
-       name: multikey-cm
+       name: cm-multikeys
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}

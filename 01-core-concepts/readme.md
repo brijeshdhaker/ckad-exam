@@ -107,3 +107,5 @@ kubectl get pods --field-selector=status.phase=Running
 # List Events sorted by timestamp
 kubectl get events --sort-by=.metadata.creationTimestamp
 
+
+kubectl get po -o=custom-columns="POD_NAME:.metadata.name, POD_STATUS:.status.containerStatuses[].state"

@@ -12,7 +12,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ckad-configmap
+  name: cm-configs
+  namespace: ckad
 data:
   # property-like keys; each key maps to a simple value
   appame: pgc-tool
