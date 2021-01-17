@@ -9,7 +9,7 @@ spec:
   volumes:
   - name: cm-volume
     configMap: 
-        name: default-app-configs
+        name: ckad-configmap
         items:
           - key: dev.properties
             path: dev.properties
@@ -29,12 +29,12 @@ spec:
       - name: APPNAME
         valueFrom:
           configMapKeyRef: 
-            name: default-app-configs
+            name: ckad-configmap
             key: appame
       - name: PROFILE 
         valueFrom: 
           configMapKeyRef: 
-            name: default-app-configs
+            name: ckad-configmap
             key: profile
   dnsPolicy: ClusterFirst
   restartPolicy: Always

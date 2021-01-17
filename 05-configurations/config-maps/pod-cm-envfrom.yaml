@@ -12,9 +12,7 @@ spec:
     resources: {}
     envFrom:
     - configMapRef:
-       name: default-configs
-    - secretRef:
-       name: default-configs   
+       name: multikey-cm
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}

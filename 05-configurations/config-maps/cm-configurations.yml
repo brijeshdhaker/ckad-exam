@@ -23,9 +23,6 @@ data:
   dev.properties: | # YAML for multi-line string
     env=DEV
     db.url=sybdevol@jpmchase.com
-  dev.properties: | # YAML for multi-line string
-    env=DEV
-    db.url=sybdevol@jpmchase.com
   uat.properties: | # YAML for multi-line string
     env=UAT
     db.url=sybuatol@jpmchase.com
