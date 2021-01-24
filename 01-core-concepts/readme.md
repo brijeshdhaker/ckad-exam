@@ -1,11 +1,8 @@
 ## 1. Concepts - 13%
-
 1. Understand Kubernetes API Primitives
 2. Create and Configure Basic Pods
 
 ### Question 1 : Create a namespace called "frontend".
-
-
 <details><summary>show</summary>
 <p>
 
@@ -99,13 +96,49 @@ kubectl run mypodx --image=redis --restart=Never --dry-run=client -o yaml > /roo
 
 ---
 
+### Question 7 : List name of all pod in current active namespace 
+<details><summary>show</summary>
+<p>
+
+```bash
 kubectl get pods -o custom-columns=NAME:.metadata.name
+```
+</p>
+</details>
 
-# Get all running pods in the namespace
+---
+
+
+### Question 8 : Get all running pods in the current active namespace
+<details><summary>show</summary>
+<p>
+
+```bash
 kubectl get pods --field-selector=status.phase=Running
+```
+</p>
+</details>
 
-# List Events sorted by timestamp
+---
+
+### Question 9 : List Events sorted by timestamp
+<details><summary>show</summary>
+<p>
+
+```bash
 kubectl get events --sort-by=.metadata.creationTimestamp
+```
+</p>
+</details>
 
+---
 
+### Question 10 : List only pod names &  state 
+<details><summary>show</summary>
+<p>
+
+```bash
 kubectl get po -o=custom-columns="POD_NAME:.metadata.name, POD_STATUS:.status.containerStatuses[].state"
+```
+</p>
+</details>
