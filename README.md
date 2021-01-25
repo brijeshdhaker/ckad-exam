@@ -2,13 +2,6 @@
 **A Complete Guide for CKAD Certification**
 
 
-
-
-
-
-
-
-
 ## 4. Observability - 18%
 
 ### Question 1 : Create a pod myredis with image redis. Define a liveness probe and readiness probe with an initial delay of 5 seconds and command redis-cli PING.
@@ -277,7 +270,7 @@ kubectl expose pod ig-11 --name=greef --port=8080 --target-port=80 --dry-run=cli
 <p>
 
 ```bash
-kubectl expose deployment cara --type=NodePort --port80 
+kubectl expose deployment cara --type=NodePort --port=80 
 kubectl patch service cara --patch '{"spec": {"ports": [{"port": 80,"nodePort": 31888}]}}'
 ```
 ```YAML
@@ -315,7 +308,7 @@ EOF
 kubectl apply -f 6.4.3-geonosis-shield.yaml 
 
 kubectl run busybox --image=busybox --labels=access=granted -it --rm -- wget -O-  10.103.26.211:80
-kubectl run busybox --image=busybox -it --rm -- wget -O- 10.152.183.196:8080
+kubectl run busybox --image=busybox --restart=Never -it --rm -- wget -O- 10.152.183.196:8080
 ```
 
 ```YAML

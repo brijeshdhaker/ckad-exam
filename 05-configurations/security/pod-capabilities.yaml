@@ -9,11 +9,12 @@ spec:
   securityContext:
     runAsUser: root
     runAsGroup: root
-    capabilities: # and this
-      add: ["NET_ADMIN", "SYS_TIME"] # this as well
   containers:
   - image: nginx
     name: nginx
+    securityContext:
+      capabilities: # and this
+        add: ["NET_ADMIN", "SYS_TIME"] # this as well
     resources:
       limits:
         memory: 64Mi

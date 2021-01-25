@@ -1,5 +1,4 @@
 ## 3. Multi-Container Pods - 10%
-
 1. Understand multi-container pod design patterns (eg: ambassador, adaptor, sidecar)
 
 
@@ -139,3 +138,30 @@ spec:
 </details>
 
 ---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-demo
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: workdir
+      mountPath: /usr/share/nginx/html
+# These containers are run during pod initialization
+  initContainers:
+  - name: install
+    image: busybox
+    command: ["/bin/sh", "-c"]
+    args: ['wget -O /work-dir/index.html http://$(HTTP_SERVER_SERVICE_HOST):$(HTTP_SERVER_SERVICE_PORT)']
+    volumeMounts:
+    - name: workdir
+      mountPath: "/work-dir"
+  dnsPolicy: Default
+  volumes:
+  - name: workdir
+    emptyDir: {}

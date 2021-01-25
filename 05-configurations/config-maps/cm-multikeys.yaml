@@ -2,11 +2,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: cm-multikeys
-  namespace: ckad
 data:
   SPECIAL_LEVEL: very
   SPECIAL_TYPE: charm
   APP_NAME: pgc-tool
   ACTIVE_PROFILE: dev
   USER_NAME: i100121
-  PASSWORS: Accoo7@k47
+  PASSWORD: Accoo7@k47

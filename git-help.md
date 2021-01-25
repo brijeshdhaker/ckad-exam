@@ -22,3 +22,9 @@ git push -u origin master
 git add README.md
 git commit -m "first commit"
 git push -u origin develop
+
+# deleted a file but didn’t commit
+git checkout HEAD <filename>
+
+# deleted a file and committed the deletion
+git reset --hard HEAD~1

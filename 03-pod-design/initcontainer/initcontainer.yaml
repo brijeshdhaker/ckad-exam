@@ -4,14 +4,14 @@ metadata:
   creationTimestamp: null
   labels:
     run: nginx
-  name: nginx
+  name: multi-container
 spec:
   volumes:
   - name : myvolume
     emptyDir: {}
   containers:
   - image: nginx
-    name: nginx
+    name: c1
     resources: {}
     ports:
       - containerPort: 80
@@ -21,7 +21,7 @@ spec:
       mountPath: /usr/share/nginx/html  
   initContainers:
   - image: busybox
-    name: busybox
+    name: c2
     command: ["/bin/sh", "-c"]
     args: ["wget -O /work-dir/index.html http://neverssl.com/online"]
     resources: {}

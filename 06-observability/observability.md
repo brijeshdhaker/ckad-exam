@@ -109,3 +109,16 @@ spec:
         resources: {}
 status: {}
 ```
+
+### Get the memory and CPU usage of all the pods and find out top 3 pods which have the highest usage and put them into the cpu-usage.txt file
+// get the top 3 hungry pods
+kubectl top pod --all-namespaces | sort --reverse --key 3 --numeric | head -3
+
+// putting into file
+kubectl top pod --all-namespaces | sort --reverse --key 3 --numeric | head -3 > cpu-usage.txt
+
+// verify
+cat cpu-usage.txt
+
+
+kubectl top pod --all-namespaces --sort-by=cpu --no-headers
