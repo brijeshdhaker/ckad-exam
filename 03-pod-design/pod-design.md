@@ -62,3 +62,9 @@ spec:
 status: {}
 ```
 
+# 
+# Create a new deployment for running nginx with the following parameters:
+# Run the deployment in the kdpd00201 namespace. The namespace has already been created
+# Name the deployment nginx and configure with 3 replicas
+# Configure the pod with a container image of lfccncf/nginx:1.13.7-alpine
+# Set an environment variable of NGINX_PORT=80 and also expose that port for the container above

@@ -8,9 +8,9 @@ metadata:
 spec:
   # Below lines need to add 
   securityContext:
-    runAsUser: root
-    runAsGroup: root
-    fsGroup: root
+    runAsUser: 0
+    runAsGroup: 10
+    fsGroup: 10
   #  
   containers:
   - image: nginx
@@ -21,3 +21,12 @@ spec:
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}
+
+#
+# id -u username
+# id -g username
+# id -G username
+# id username
+# id
+# root@secure-pod:/tmp# id
+# uid=0(root) gid=10(uucp) groups=10(uucp)

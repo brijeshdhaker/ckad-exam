@@ -1,6 +1,7 @@
 # CKAD Certification 
 **A Complete Guide for CKAD Certification**
 
+https://liptanbiswas.com/tuts/ckad-practice-challenges
 
 ## 4. Observability - 18%
 
